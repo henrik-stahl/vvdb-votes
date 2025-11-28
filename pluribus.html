@@ -43,15 +43,6 @@
         border-color: rgba(255, 202, 255, 0.6);
       }
 
-      /* ICON STYLE — Lyket-like */
-      .vvdb-icon {
-        font-size: 16px;
-        line-height: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
       /* COUNTER STYLE — matches Lyket */
       .vvdb-count {
         font-weight: 500;
@@ -66,24 +57,24 @@
 
       <!-- 👍 LIKE BUTTON -->
       <div id="vvdb-like-box" class="vvdb-updown-box">
-        <div class="vvdb-icon">👍</div>
         <div class="vvdb-count">
           <div
-            data-lyket-type="like"
-            data-lyket-id="pluribus"
-            data-lyket-template="minimal"
+              data-lyket-type="like"
+              data-lyket-id="vvdb-entry-1-like"
+              data-lyket-template="minimal"
+              data-lyket-icon="👍"
           ></div>
         </div>
       </div>
 
       <!-- 👎 DISLIKE BUTTON -->
       <div id="vvdb-dislike-box" class="vvdb-updown-box">
-        <div class="vvdb-icon">👎</div>
         <div class="vvdb-count">
           <div
             data-lyket-type="like"
-            data-lyket-id="pluribus"
+            data-lyket-id="vvdb-entry-1-dislike"
             data-lyket-template="minimal"
+            data-lyket-icon="👎"
           ></div>
         </div>
       </div>
