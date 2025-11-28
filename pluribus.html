@@ -2,51 +2,53 @@
 <html>
   <head>
     <style>
-      /* SIDE-BY-SIDE LAYOUT */
+      /* Layout: side-by-side */
       .vvdb-container {
         font-family: sans-serif;
         display: flex;
         justify-content: center;
-        gap: 12px;
-        padding-top: 10px;
+        gap: 24px;
+        padding-top: 12px;
       }
 
-      /* BOX matches Lyket's Updown pill button */
-      .vvdb-updown-box {
+      /* Button box styling */
+      .vvdb-box {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 6px;
+        padding: 8px 14px;
         border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 6px 12px;
-        background: white;
-        cursor: pointer;
+        border-radius: 10px;
+        background: #fafafa;
         transition: background-color 0.2s ease, border-color 0.2s ease;
       }
 
-      .vvdb-updown-box .lyket-like__icon {
+      .vvdb-box:hover {
+        background-color: #f3f3f3;
+      }
+
+      /* Remove ALL Lyket built-in icons */
+      [data-lyket-type="like"] .lyket-like__icon,
+      [data-lyket-type="like"] .lyket-like__icon-container {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
 
-      .vvdb-updown-box:hover {
-        background-color: #f6f6f6; /* Lyket hover */
+      /* Emoji icon styling */
+      .vvdb-emoji {
+        font-size: 20px;
+        margin-bottom: 6px;
       }
 
-      /* PRESSED STATE COLORS */
-      .vvdb-updown-box.like-active {
-        background-color: rgba(36, 252, 201, 0.4);
-        border-color: rgba(36, 252, 201, 0.6);
-      }
-
-      .vvdb-updown-box.dislike-active {
-        background-color: rgba(255, 202, 255, 0.4);
-        border-color: rgba(255, 202, 255, 0.6);
-      }
-
-      /* COUNTER STYLE — matches Lyket */
+      /* Counter styling */
       .vvdb-count {
-        font-weight: 500;
         font-size: 14px;
+        font-weight: 500;
         color: #444;
       }
     </style>
@@ -55,64 +57,32 @@
   <body>
     <div class="vvdb-container">
 
-      <!-- 👍 LIKE BUTTON -->
-      <div id="vvdb-like-box" class="vvdb-updown-box">
+      <!-- LIKE BUTTON -->
+      <div class="vvdb-box">
+        <div class="vvdb-emoji">👍</div>
         <div class="vvdb-count">
           <div
-              data-lyket-type="like"
-              data-lyket-id="pluribus-like"
-              data-lyket-template="minimal"
-              data-lyket-icon="👍"
+            data-lyket-type="like"
+            data-lyket-id="pluribus-like"
+            data-lyket-template="minimal"
           ></div>
         </div>
       </div>
 
-      <!-- 👎 DISLIKE BUTTON -->
-      <div id="vvdb-dislike-box" class="vvdb-updown-box">
+      <!-- DISLIKE BUTTON -->
+      <div class="vvdb-box">
+        <div class="vvdb-emoji">👎</div>
         <div class="vvdb-count">
           <div
-            <div
-              data-lyket-type="like"
-              data-lyket-id="pluribus-dislike"
-              data-lyket-template="minimal"
-              data-lyket-icon="url(https://henrik-stahl.github.io/vvdb-votes/icons/thumb-down.svg)"
-            ></div>
+            data-lyket-type="like"
+            data-lyket-id="pluribus-dislike"
+            data-lyket-template="minimal"
           ></div>
         </div>
       </div>
 
     </div>
 
-    <!-- Lyket Script -->
     <script src="https://unpkg.com/@lyket/widget@latest/dist/lyket.js?apiKey=pt_0ba8a20c61113bf11b6f3fef48ae39"></script>
-
-    <script>
-      /*
-       * Detect when Lyket marks a button as liked (lyket--liked)
-       * and apply the correct "pressed" background style to the box.
-       */
-
-      function attachLyketState(boxId, lySelector, activeClass) {
-        const box = document.getElementById(boxId);
-        const target = box.querySelector(lySelector);
-
-        const observer = new MutationObserver(() => {
-          if (target.classList.contains("lyket--liked")) {
-            box.classList.add(activeClass);
-          } else {
-            box.classList.remove(activeClass);
-          }
-        });
-
-        observer.observe(target, {
-          attributes: true,
-          attributeFilter: ["class"]
-        });
-      }
-
-      attachLyketState("vvdb-like-box", "[data-lyket-type='like']", "like-active");
-      attachLyketState("vvdb-dislike-box", "[data-lyket-type='like']", "dislike-active");
-    </script>
-
   </body>
 </html>
