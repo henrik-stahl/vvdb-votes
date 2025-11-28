@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>VVDB Rating Test</title>
   </head>
+
   <body style="
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     display: flex;
@@ -12,12 +13,14 @@
   ">
 
     <div style="text-align: center;">
-      <!-- Interactive rating -->
+
+      <!-- INTERACTIVE RATING -->
       <div style="font-size: 18px; font-weight: 600; margin-bottom: 12px;">
-        Rate this entry
+        Sätt ditt betyg
       </div>
 
       <div
+        id="rating-widget"
         data-lyket-type="rate"
         data-lyket-id="vvdb-test-rating"
         data-lyket-template="custom"
@@ -29,24 +32,51 @@
         data-lyket-color-highlight="#8ef2dd"
       ></div>
 
-      <!-- Average rating display -->
-      <div style="margin-top: 16px; font-size: 14px; color: #555;">
-        Average rating
+      <!-- CUSTOM AVERAGE OUTPUT -->
+      <div id="avg-container" style="margin-top: 20px; display: none;">
+        <div id="avg-text" style="font-size: 14px; color: #444;"></div>
       </div>
 
-      <div
-        data-lyket-type="rate"
-        data-lyket-id="vvdb-test-rating"
-        data-lyket-template="custom"
-        data-lyket-show-rating="average"
-        data-lyket-color-primary="#00c6a2"
-        data-lyket-color-icon="#b7b7b7"
-        data-lyket-color-text="#333333"
-        data-lyket-color-background="transparent"
-        data-lyket-color-highlight="#8ef2dd"
-      ></div>
     </div>
 
+    <!-- Lyket widget script -->
     <script src="https://unpkg.com/@lyket/widget@latest/dist/lyket.js?apiKey=pt_0ba8a20c61113bf11b6f3fef48ae39"></script>
+
+    <!-- Custom Average Display Script -->
+    <script>
+      const API_KEY = "pt_0ba8a20c61113bf11b6f3fef48ae39";
+      const ENTRY_ID = "vvdb-test-rating";
+
+      async function loadAverage() {
+        try {
+          const res = await fetch(
+            `https://api.lyket.dev/v1/widgets/rate/${ENTRY_ID}`,
+            {
+              headers: { "Authorization": `Bearer ${API_KEY}` }
+            }
+          );
+
+          if (!res.ok) return;
+          const data = await res.json();
+
+          const totalReviews = data?.data?.attributes?.totalRateCount || 0;
+          const avg = data?.data?.attributes?.averageRating || 0;
+
+          // Only show if totalReviews >= 3
+          if (totalReviews >= 3) {
+            const avgRounded = avg.toFixed(1);
+            document.getElementById("avg-text").textContent =
+              `${avgRounded} av 5 (${totalReviews} omdömen)`;
+            document.getElementById("avg-container").style.display = "block";
+          }
+        } catch (e) {
+          console.warn("Failed to load Lyket average:", e);
+        }
+      }
+
+      // Run on page load
+      loadAverage();
+    </script>
+
   </body>
 </html>
