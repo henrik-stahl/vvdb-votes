@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <body style="font-family: Inter, sans-serif; display: flex; justify-content: center; padding-top: 40px;">
-    
+  <head>
+    <meta charset="utf-8" />
+    <title>VVDB Rating Test</title>
+  </head>
+  <body style="
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+  ">
+
     <div style="text-align: center;">
+      <!-- Interactive rating -->
       <div style="font-size: 18px; font-weight: 600; margin-bottom: 12px;">
         Rate this entry
       </div>
@@ -12,14 +22,28 @@
         data-lyket-id="vvdb-test-rating"
         data-lyket-template="custom"
         data-lyket-show-rating="user"
-
-        data-lyket-color-primary="#00c6a2"       <!-- Active icons -->
-        data-lyket-color-icon="#b7b7b7"          <!-- Inactive icons -->
-        data-lyket-color-text="#333"             <!-- Numbers text -->
+        data-lyket-color-primary="#00c6a2"
+        data-lyket-color-icon="#b7b7b7"
+        data-lyket-color-text="#333333"
         data-lyket-color-background="transparent"
-        data-lyket-color-highlight="#8ef2dd"     <!-- Click highlight -->
-        data-lyket-font-family="Inter"
-        data-lyket-font-size="24px"
+        data-lyket-color-highlight="#8ef2dd"
+      ></div>
+
+      <!-- Average rating display -->
+      <div style="margin-top: 16px; font-size: 14px; color: #555;">
+        Average rating
+      </div>
+
+      <div
+        data-lyket-type="rating"
+        data-lyket-id="vvdb-test-rating"
+        data-lyket-template="custom"
+        data-lyket-show-rating="average"
+        data-lyket-color-primary="#00c6a2"
+        data-lyket-color-icon="#b7b7b7"
+        data-lyket-color-text="#333333"
+        data-lyket-color-background="transparent"
+        data-lyket-color-highlight="#8ef2dd"
       ></div>
     </div>
 
