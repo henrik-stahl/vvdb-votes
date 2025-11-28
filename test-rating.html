@@ -32,9 +32,11 @@
         data-lyket-color-highlight="#8ef2dd"
       ></div>
 
-      <!-- CUSTOM AVERAGE OUTPUT -->
-      <div id="avg-container" style="margin-top: 20px; display: none;">
-        <div id="avg-text" style="font-size: 14px; color: #444;"></div>
+      <!-- ALWAYS-VISIBLE AVERAGE -->
+      <div id="avg-container" style="margin-top: 20px;">
+        <div id="avg-text" style="font-size: 14px; color: #444;">
+          Laddar genomsnitt…
+        </div>
       </div>
 
     </div>
@@ -42,9 +44,9 @@
     <!-- Lyket widget script -->
     <script src="https://unpkg.com/@lyket/widget@latest/dist/lyket.js?apiKey=pt_0ba8a20c61113bf11b6f3fef48ae39"></script>
 
-    <!-- Custom Average Display Script -->
+    <!-- Custom Average Rating Fetch -->
     <script>
-      const API_KEY = "pt_0ba8a20c61113bf11b6f3fef48ae39";
+      const API_KEY = "YOUR_PUBLIC_API_KEY";
       const ENTRY_ID = "vvdb-test-rating";
 
       async function loadAverage() {
@@ -56,22 +58,26 @@
             }
           );
 
-          if (!res.ok) return;
+          if (!res.ok) {
+            document.getElementById("avg-text").textContent =
+              "Could not fetch average rating.";
+            return;
+          }
+
           const data = await res.json();
 
           const totalReviews = data?.data?.attributes?.totalRateCount || 0;
           const avg = data?.data?.attributes?.averageRating || 0;
+          const avgRounded = avg.toFixed(1);
 
-          // Only show if totalReviews >= 3
-//          if (totalReviews >= 3) {
-//            const avgRounded = avg.toFixed(1);
-//            document.getElementById("avg-text").textContent =
-//              `${avgRounded} av 5 (${totalReviews} omdömen)`;
-//            document.getElementById("avg-container").style.display = "block";
-//          }
-//        } catch (e) {
-//          console.warn("Failed to load Lyket average:", e);
-//        }
+          document.getElementById("avg-text").textContent =
+            `${avgRounded} av 5 (${totalReviews} omdömen)`;
+
+        } catch (e) {
+          document.getElementById("avg-text").textContent =
+            "Error loading rating.";
+          console.warn("Lyket API error:", e);
+        }
       }
 
       // Run on page load
