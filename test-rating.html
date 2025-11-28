@@ -63,7 +63,7 @@
           const avg = data?.data?.attributes?.averageRating || 0;
 
           // Only show if totalReviews >= 3
-          if (totalReviews >= 3) {
+          if (totalReviews >= 1) {
             const avgRounded = avg.toFixed(1);
             document.getElementById("avg-text").textContent =
               `${avgRounded} av 5 (${totalReviews} omdömen)`;
